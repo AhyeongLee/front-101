@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move Scroll Auto</title>
+    <style>
+        div {
+            background-color: burlywood;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        span {
+            position: fixed;
+            top: 20px;
+            left: 400px;
+            display: block;
+        }
+
+        button {
+            width: 100px;
+            height: 30px;
+        }
+
+        .thisOne {
+            background-color: indianred;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <span>
+        <button id="move100">scroll by 100</button>
+        <button id="moveTo100">scroll to 100</button>
+        <button id="moveToThisOne">this one</button>
+    </span>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div class="thisOne"></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <script>
+        const move100 = document.querySelector('#move100');
+        const moveTo100 = document.querySelector('#moveTo100');
+        const moveToThisOne = document.querySelector('#moveToThisOne');
+        const thisOne = document.querySelector('.thisOne');
+        move100.addEventListener('click', () => {
+            window.scroll({
+                top: 100 + document.documentElement.scrollTop,
+                behavior: 'smooth'
+            });
+        });
+
+        moveTo100.addEventListener('click', () => {
+            window.scroll({
+                top: 100,
+                behavior: 'smooth'
+            });
+        });
+
+        moveToThisOne.addEventListener('click', () => {
+            // window.scroll({
+            //     top: 1110
+            // });
+            thisOne.scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+    
+</body>
+</html>

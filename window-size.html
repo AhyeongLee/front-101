@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Window Size</title>
+</head>
+<body>
+    <div id="div1" style="background-color: #966453; width: 300; height: 200; display: inline-block; margin: 15px; padding: 15px;">
+        <p id="p1"></p>
+        <p id="p2"></p>
+        <p id="p3"></p>
+        <p id="p4"></p>
+    </div>
+    <script>
+        const setPs = () => {
+            document.querySelector('#p1').innerHTML=`windows.screen: ${window.screen.width}, ${window.screen.height}`;
+            document.querySelector('#p2').innerHTML=`windows.outer: ${window.outerWidth}, ${window.outerHeight}`;
+            document.querySelector('#p3').innerHTML=`windows.inner: ${window.innerWidth}, ${window.innerHeight}`;
+            document.querySelector('#p4').innerHTML=`client size: ${document.documentElement.clientWidth}, ${document.documentElement.clientHeight}`;
+        }
+        window.onload = () => {
+            setPs();
+        }
+        window.addEventListener('resize', () => {
+            setPs();
+        });
+    </script>
+</body>
+</html>

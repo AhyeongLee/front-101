@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinate</title>
+    <style>
+        div {
+            background-color: burlywood;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        .thisOne {
+            background-color: indianred;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div class="thisOne"></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <script>
+        const thisOne = document.querySelector('.thisOne');
+        thisOne.addEventListener('click', (event) => {
+            console.log(thisOne.getBoundingClientRect());
+            console.log(
+                `client : ${event.clientX}, ${event.clientY} \npage : ${event.pageX}, ${event.pageY}`
+            );
+        });
+    </script>
+    
+</body>
+</html>
