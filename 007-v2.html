@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0007 v2</title>
+    <style>
+        body {
+            background-color: black;
+        }
+        .line {
+            position: absolute;
+            background-color: white;
+        }
+        .vertical {
+            width: 1px;
+            height: 100%;
+    
+        }
+        .horizontal {
+            width: 100%;
+            height: 1px;
+            
+        }
+        .tag {
+            color: white;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="line vertical"></div>
+    <div class="line horizontal"></div>
+    <span class="tag"></span>
+
+    <script>
+        const vertical = document.querySelector('.vertical');
+        const horizontal = document.querySelector('.horizontal');
+        const tag = document.querySelector('.tag');
+
+        addEventListener('load', () => {
+            // const targetRect = target.getBoundingClientRect();
+            // const targetHalfWidth = targetRect.width / 2;
+            // const targetHalfHeight = targetRect.height / 2;
+            document.addEventListener('mousemove', (e) => {
+                const x = e.clientX;
+                const y = e.clientY;
+                vertical.style.transform = `translateX(${x}px)`;
+                horizontal.style.transform = `translateY(${y}px)`;
+                tag.style.transform = `translate(${x+20}px, ${y+20}px)`;
+                tag.innerHTML=`${e.clientX}, ${e.clientY}`;
+
+
+        });
+        });
+        
+    </script>
+</body>
+</html>
