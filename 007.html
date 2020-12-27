@@ -58,24 +58,28 @@
         function updateCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
+            // 작은 원
             ctx.beginPath();
             ctx.arc(x - 10, y - 10, 10, 0, Math.PI*2);
             ctx.strokeStyle = "#ffffff";
             ctx.stroke();
             ctx.closePath();
 
+            // 큰 원
             ctx.beginPath();
             ctx.arc(x - 10, y - 10, 20, 0, Math.PI*2);
             ctx.strokeStyle = "#ffffff";
             ctx.stroke();
             ctx.closePath();
 
+            // 세로줄
             ctx.beginPath();
             ctx.moveTo(x - 10, 0);
             ctx.lineTo(x - 10, clientHeight);
             ctx.strokeStyle = "#ffffff";
             ctx.stroke();
 
+            // 가로줄
             ctx.beginPath();
             ctx.moveTo(0, y - 10);
             ctx.lineTo(clientWidth, y - 10);
@@ -83,6 +87,7 @@
             ctx.stroke();
 
 
+            // 글자
             ctx.font = '20px serif';
             ctx.fillText(`${x}px, ${y}px`, x + 20, y + 20);
             ctx.fillStyle = "#ffffff";
