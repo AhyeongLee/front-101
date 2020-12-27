@@ -32,6 +32,7 @@ main {
 input {
     border-width: 0;
     height: 30px;
+    outline: none;
 }
 ul {
     padding-inline-start: 40px;

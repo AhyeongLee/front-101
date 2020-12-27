@@ -2,9 +2,6 @@ const addBtn = document.querySelector('.addBtn');
 const itemInput = document.querySelector('input');
 const items = document.querySelector('.items');
 
-function deleteButtonClick(e) {
-    e.parentNode.parentNode.removeChild(e.parentNode);
-}
 function createNewLi() {
     if(itemInput.value=='') {
         return;
@@ -15,22 +12,31 @@ function createNewLi() {
 
     const newDeletBtn = document.createElement('img');
     newDeletBtn.setAttribute('src', 'trash-can.png');
-    newDeletBtn.setAttribute('onclick', 'deleteButtonClick(this)');
+    
 
     newItem.appendChild(newSpan);
     newItem.appendChild(newDeletBtn);
     
     items.appendChild(newItem);
+
+    newItem.scrollIntoView({block: 'center', behavior: 'smooth'});
     
     itemInput.value='';
 }
 
 addBtn.addEventListener('click', (e) => {
     createNewLi();
+    itemInput.focus();
 });
 
 itemInput.addEventListener('keyup', (e) => {
     if(e.key=='Enter') {
         createNewLi();
+    }
+});
+
+items.addEventListener('click', (e) => {
+    if (e.target.tagName == 'IMG'){
+        items.removeChild(e.target.parentNode);
     }
 });
