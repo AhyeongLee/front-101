@@ -1,47 +1,41 @@
 html {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 .game__container {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    /* display: flex;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  /* display: flex;
     justify-content: center; */
 }
 .game__background {
-    width: 800px;
-    height: 500px;
-    background-size: 800px 500px;
-    margin: 0 auto;
-    margin-top: 50px;
-    
-    border-radius: 30px;
-    background-image: url('./img/background.png');
+  position: relative;
+  width: 800px;
+  height: 500px;
+  background-size: 800px 500px;
+  margin: 0 auto;
+  margin-top: 50px;
+
+  border-radius: 30px;
+  background-image: url("./img/background.png");
 }
 
 .game__status,
 .gmae__board {
-    width: 800px;
-    height: 250px;
+  width: 800px;
+  height: 250px;
 }
 
 .bug {
-    position: absolute;
-    top: 470px; /* 320 ~ 450*/
-    left: 200px;
-    z-index: 2;
+  position: absolute;
+  top: 250px; /* 250 ~ 430*/
+  left: 200px;
+  z-index: 2;
 }
 .carrot {
-    position: absolute;
-    top: 450px; /* 320 ~ 450*/
-    left: 200px;
-    z-index: 1;
-}
-
-.carrot2 {
-    position: absolute;
-    top: 440px; /* 320 ~ 450*/
-    left: 200px;
-    z-index: 1;
+  position: absolute;
+  top: 230px; /* 230 ~ 410*/
+  left: 200px;
+  z-index: 1;
 }
