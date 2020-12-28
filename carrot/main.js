@@ -9,22 +9,28 @@ const TOP_MAX = 20;
 const TOP_MIN = 12;
 const LEFT_MAX = 36;
 const LEFT_MIN = 1;
+const LEVEL = 20;
 
-let timer=10;
-let count=10;
+let timer;
+let count;
 let gameStart = false;
 
-const game__timer = document.querySelector('.game__timer');
-const game__bugs = document.querySelector('.game__bugs');
-const game__carrots = document.querySelector('.game__carrots');
+// game__status
 const game__startBtn = document.querySelector('.game__startBtn');
 const game__stopBtn = document.querySelector('.game__stopBtn');
+const game__timer = document.querySelector('.game__timer');
 const game__replayBtn = document.querySelector('.game__replayBtn');
 const game__count = document.querySelector('.game__count');
+
+// game__board
+const game__bugs = document.querySelector('.game__bugs');
+const game__carrots = document.querySelector('.game__carrots');
+
+// dialog
+const resultDialog = document.querySelector('dialog');
 const game__result = document.querySelector('.game__result');
 
-const resultDialog = document.querySelector('dialog');
-
+// sound
 const sound__bg = document.querySelector('.sound__bg');
 const sound__alert = document.querySelector('.sound__alert');
 const sound__bug_pull = document.querySelector('.sound__bug_pull');
@@ -51,20 +57,20 @@ function getRandomPosition() {
  * @param {string} result 'win' 또는 'lost'
  */
 function endGame(result) {
-    sound__bg.pause();
-    sound__bg.currentTime = 0;
     gameStart=false;
+    sound__bg.pause();
     resultDialog.open = true;
     game__startBtn.style.display = 'none';
     game__stopBtn.style.display = 'none';
+
     if (result === 'lost') {
-        sound__alert.play();
+        playSound(sound__alert);
         game__result.textContent = 'YOU LOST 😆';
     } else if (result === 'win') {
-        sound__game_win.play();
+        playSound(sound__game_win);
         game__result.textContent = 'YOU WIN 😉';
     } else {
-        sound__alert.play();
+        playSound(sound__alert);
         game__result.textContent = 'REPLAY ❓';
     }
 }
@@ -79,6 +85,7 @@ function startTimer() {
         if (!gameStart) {
             return;
         }
+
         game__timer.textContent = `0:${--timer}`
         if(timer === 0){
             endGame('lost');
@@ -94,6 +101,7 @@ function startTimer() {
 
 /**
  * 아이템(벌레, 당근)의 이미지 태그를 생성하여 리턴
+ * 벌레는 항상 당근보다 위에 (z-index)
  * @param {string} imgSrc 'carrot' 또는 'bug'
  * @return {HTMLImageElement} item 
  */
@@ -108,7 +116,6 @@ function getItemImageTag(imgSrc) {
     }
 
     let item;
-
     const position = getRandomPosition();
     item = document.createElement('img');
     item.setAttribute('src', `./img/${imgSrc}.png`);
@@ -129,13 +136,12 @@ function getItemImageTag(imgSrc) {
  * 게임판 세팅
  * 벌레와 당근 10개씩 랜덤한 위치에 추가
  */
-function setBoards() {
+function setBoards(level) {
     let bug;
     let carrot;
-    for(let i=0; i<10; i++) {
+    for(let i=0; i<level; i++) {
         bug = getItemImageTag('bug');
         game__bugs.appendChild(bug);
-
         carrot = getItemImageTag('carrot');
         game__carrots.appendChild(carrot);
     }
@@ -149,8 +155,8 @@ function setBoards() {
 function startGame()  {
     game__startBtn.style.display = 'none';
     game__stopBtn.style.display = 'inline';
-    sound__bg.play();
-    setBoards();
+    playSound(sound__bg);
+    setBoards(LEVEL);
     startTimer();
 }
 
@@ -166,19 +172,12 @@ function deleteCarrot(target) {
     }
 }
 
-game__startBtn.addEventListener('click', () => {
-    gameStart=true;
-    startGame();
-    sound__bg.play();
-});
-
-game__stopBtn.addEventListener('click', () => {
-    endGame('stop');
-});
-
-game__replayBtn.addEventListener('click', () => {
-    timer = 10;
-    count = 10;
+/**
+ * 게임 초기화
+ */
+function setGame() {
+    timer = LEVEL;
+    count = LEVEL;
     game__timer.style.color = 'black';
     game__startBtn.style.display = 'inline';
     game__timer.textContent = `0:${timer}`;
@@ -186,7 +185,29 @@ game__replayBtn.addEventListener('click', () => {
     game__bugs.innerHTML = '';
     game__carrots.innerHTML = '';
     resultDialog.open = false;
-    
+}
+
+/**
+ * 사운드를 플레이하기 전에 처음으로 돌려서 재생
+ * @param {HTMLAudioElement} sound 
+ */
+function playSound(sound) {
+    sound.currentTime = 0;
+    sound.play();
+}
+
+game__startBtn.addEventListener('click', () => {
+    gameStart=true;
+    startGame();
+    playSound(sound__bg);
+});
+
+game__stopBtn.addEventListener('click', () => {
+    endGame('stop');
+});
+
+game__replayBtn.addEventListener('click', () => {
+    setGame();
 });
 
 game__carrots.addEventListener('click', (e) => {
@@ -194,11 +215,7 @@ game__carrots.addEventListener('click', (e) => {
         return;
     }
     if (e.target.tagName === 'IMG') {
-        if (!sound__carrot_pull.paused) {
-            sound__carrot_pull.pause();
-            sound__carrot_pull.currentTime = 0;
-        }
-        sound__carrot_pull.play();
+        playSound(sound__carrot_pull);
         deleteCarrot(e.target);
     }
 });
@@ -208,8 +225,10 @@ game__bugs.addEventListener('click', (e) => {
         return;
     }
     if (e.target.tagName === 'IMG') {
-        sound__bug_pull.play();
+        playSound(sound__bug_pull);
         endGame('lost');
     }
 });
+
+setGame();
 

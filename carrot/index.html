@@ -11,7 +11,6 @@
 <body>
     <section class="game__container">
         <div class="game__background" alt="background">
-
             <div class="game__status">
                 <div class="game__btnContainer">
                     <button class="game__startBtn">
@@ -21,29 +20,29 @@
                         <i class="fas fa-stop"></i>
                     </button>
                 </div>
-                <div class="game__timer">0:10</div>
-                <div class="game__count">10</div>
+                <div class="game__timer"></div>
+                <div class="game__count"></div>
             </div>
             <div class="gmae__board">
                 <div class="game__bugs">
                 </div>
                 <div class="game__carrots">
                 </div>
-                <dialog>
-                    <button class="game__replayBtn">
-                        <i class="fas fa-redo-alt"></i>
-                    </button>
-                    <div class="game__result">You Win 😉</div>
-                </dialog>
             </div>
+            <dialog>
+                <button class="game__replayBtn">
+                    <i class="fas fa-redo-alt"></i>
+                </button>
+                <div class="game__result">You Win 😉</div>
+            </dialog>
         </div>
-        <audio class="sound__bg" src="./sound/bg.mp3"></audio>
+    </section>
+
+    <audio class="sound__bg" src="./sound/bg.mp3"></audio>
         <audio src="./sound/alert.wav" class="sound__alert"></audio>
         <audio src="./sound/carrot_pull.mp3" class="sound__carrot_pull"></audio>
         <audio src="./sound/bug_pull.mp3" class="sound__bug_pull"></audio>
         <audio src="./sound/game_win.mp3" class="sound__game_win"></audio>
 
-
-    </section>
 </body>
 </html>
