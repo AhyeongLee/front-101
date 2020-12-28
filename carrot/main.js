@@ -52,6 +52,7 @@ function getRandomPosition() {
  */
 function endGame(result) {
     sound__bg.pause();
+    sound__bg.currentTime = 0;
     gameStart=false;
     resultDialog.open = true;
     game__startBtn.style.display = 'none';
@@ -59,9 +60,12 @@ function endGame(result) {
     if (result === 'lost') {
         sound__alert.play();
         game__result.textContent = 'YOU LOST 😆';
-    } else {
+    } else if (result === 'win') {
         sound__game_win.play();
         game__result.textContent = 'YOU WIN 😉';
+    } else {
+        sound__alert.play();
+        game__result.textContent = 'REPLAY ❓';
     }
 }
 
@@ -109,6 +113,7 @@ function getItemImageTag(imgSrc) {
     item = document.createElement('img');
     item.setAttribute('src', `./img/${imgSrc}.png`);
     item.setAttribute('alt', `${imgSrc}`);
+    item.setAttribute('class', 'item')
     item.setAttribute(
         'style',
         `position: absolute; 
@@ -168,7 +173,7 @@ game__startBtn.addEventListener('click', () => {
 });
 
 game__stopBtn.addEventListener('click', () => {
-    endGame('lost');
+    endGame('stop');
 });
 
 game__replayBtn.addEventListener('click', () => {
@@ -189,6 +194,10 @@ game__carrots.addEventListener('click', (e) => {
         return;
     }
     if (e.target.tagName === 'IMG') {
+        if (!sound__carrot_pull.paused) {
+            sound__carrot_pull.pause();
+            sound__carrot_pull.currentTime = 0;
+        }
         sound__carrot_pull.play();
         deleteCarrot(e.target);
     }
