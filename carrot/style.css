@@ -97,15 +97,15 @@ button:hover {
   height: 50px;
   transition: all 200ms ease;
 }
-.bug {
+/* .bug {
   position: absolute;
-  top: 260px; /* 260 ~ 430*/
-  left: 730px; /* 10 ~ 730*/
+  top: 260px; 
+  left: 730px; 
   z-index: 2;
 }
 .carrot {
   position: absolute;
-  top: 250px; /* 250 ~ 410*/
-  left: 730px; /* 10 ~ 730*/
+  top: 250px;
+  left: 730px;
   z-index: 1;
-}
+} */
