@@ -4,6 +4,21 @@ import Status from './status.js';
 import Sound from './sound.js';
 import Dialog from './dialog.js';
 
+export const Result = Object.freeze({
+    win: 'win',
+    lost: 'lost',
+    stop: 'stop'
+});
+
+const Button = Object.freeze({
+    stop: 'stop',
+    start: 'start'
+});
+
+const Display = Object.freeze({
+    inline: 'inline',
+    none: 'none'
+});
 
 // Builder Pattern
 export default class GameBuilder {
@@ -46,7 +61,8 @@ class Game {
             this.start();
         });
         this.status.setClickStopListener(() => {
-            this.end('stop');
+            this.sound.playAlert();
+            this.end(Result.stop);
         });
 
         this.board.setClickBugListener((e) => {
@@ -55,7 +71,7 @@ class Game {
             }
             if (e.target.tagName === 'IMG') {
                 this.sound.playBugPull();
-                this.end('lost');
+                this.end(Result.lost);
             }
         });
         this.board.setClickCarrotListener((e) => {
@@ -67,7 +83,8 @@ class Game {
                 this.status.setCountTextContent(--this.countCarrot);
                 this.board.deleteCarrot(e.target);
                 if (this.countCarrot === 0) {
-                    this.end('win');
+                    this.sound.playWin();
+                    this.end(Result.win);
                 }
             }
         });
@@ -77,6 +94,9 @@ class Game {
         });
     }
 
+    setEndGameListener(onGameEnd) {
+        this.onGameEnd = onGameEnd;
+    }
 
     /**
      * 게임 타이머 - 1초씩 카운트다운
@@ -84,22 +104,22 @@ class Game {
      * timer가 0이 되면 endGame('lost') 호출
      */
     countDown() {
-        setTimeout(() => this.oneSecond(), 1000);
+        setTimeout(() => this.perOneSecond(), 1000);
     }
-    
-    oneSecond = () =>{
+    perOneSecond = () =>{
         if (!this.isStarted) {
             return;
         }
         this.status.setTimerTextContent(--this.countTimer);
         console.log(this.countTimer);
         if(this.countTimer === 0){
-            this.end('lost');
+            this.sound.playAlert();
+            this.end(Result.lost);
             return;
         } else if (this.countTimer < 4) {
             this.status.setTimerColor('red');
         }
-        setTimeout(this.oneSecond, 1000);
+        setTimeout(this.perOneSecond, 1000);
     }
 
     /**
@@ -109,8 +129,8 @@ class Game {
      */
     start() {
         this.isStarted = true;
-        this.status.setBtnDisplay('start', 'none');
-        this.status.setBtnDisplay('stop', 'inline');
+        this.status.setBtnDisplay(Button.start, Display.none);
+        this.status.setBtnDisplay(Button.stop, Display.inline);
         this.board.setBoard(this.bugNum, this.carrotNum);
         this.sound.playBg();
         this.countDown();
@@ -122,16 +142,13 @@ class Game {
     init() {
         this.countTimer = this.timer;
         this.countCarrot = this.carrotNum;
-        this.status.setBtnDisplay('start', 'inline');
+        this.status.setBtnDisplay(Button.start, Display.inline);
         this.status.setTimerColor('black');
         this.status.setTimerTextContent(this.timer);
         this.status.setCountTextContent(this.carrotNum);
         this.board.clearBoard();
 
     }
-
-
-    
 
     /**
      * 게임 종료시 호출됨
@@ -143,20 +160,9 @@ class Game {
         this.isStarted=false;
         this.sound.pauseBg();
         this.popup.open();
-        this.status.setBtnDisplay('stop', 'none');
+        this.status.setBtnDisplay(Button.stop, Display.none);
 
-        let resultString;
-        if (result === 'lost') {
-            this.sound.playAlert();
-            resultString = 'YOU LOST 😆';
-        } else if (result === 'win') {
-            this.sound.playWin();
-            resultString = 'YOU WIN 😉';
-        } else {
-            this.sound.playAlert();
-            resultString = 'REPLAY ❓';
-        }
-        this.popup.setResultString(resultString);
+        this.onGameEnd && this.onGameEnd(result);
     }
 
 
