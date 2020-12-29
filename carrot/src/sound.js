@@ -18,25 +18,26 @@ export default class Sound {
         sound.play();
     }
 
-    pauseSound(sound) {
-        sound.pause();
+    pauseBg() {
+        this.sound__bg.pause();
     }
 
-    getBg() {
-        return this.sound__bg;
+    playBg() {
+        this.playSound(this.sound__bg);
     }
 
-    getAlert() {
-        return this.sound__alert;
+    playAlert() {
+        this.playSound(this.sound__alert);
     }
 
-    getBugPull() {
-        return this.sound__bug_pull;
+    playBugPull() {
+        this.playSound(this.sound__bug_pull);
     }
-    getCarrotPull() {
-        return this.sound__carrot_pull;
+    playCarrotPull() {
+        this.playSound(this.sound__carrot_pull);
     }
-    getWin() {
-        return this.sound__game_win;
+    playWin() {
+        this.playSound(this.sound__game_win);
+
     }
 }

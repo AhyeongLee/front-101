@@ -34,12 +34,14 @@ export default class Board {
      * 게임판 세팅
      * 벌레와 당근 10개씩 랜덤한 위치에 추가
      */
-    setBoard(level) {
+    setBoard(bugNum, carrotNum) {
         let bug;
         let carrot;
-        for(let i=0; i<level; i++) {
+        for(let i=0; i<bugNum; i++) {
             bug = getItemImageTag('bug');
             this.game__bugs.appendChild(bug);
+        }
+        for(let i=0; i<carrotNum; i++) {
             carrot = getItemImageTag('carrot');
             this.game__carrots.appendChild(carrot);
         }
