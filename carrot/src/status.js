@@ -34,7 +34,12 @@ export default class Status {
         this.game__timer.style.color = color;
     }
 
-    toggleBtn(btn, value) {
+    /**
+     * 버튼 display 속성 세팅
+     * @param {HTMLButtonElement} btn 
+     * @param {string} value 
+     */
+    setBtnDisplay(btn, value) {
         const theBtn = btn === 'start' ? this.game__startBtn : this.game__stopBtn;
         theBtn.style.display = value;
     }

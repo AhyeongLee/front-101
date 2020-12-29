@@ -65,7 +65,7 @@ function endGame(result) {
     gameStart=false;
     gameSound.pauseSound(gameSound.getBg());
     gameEndPopup.open();
-    gameStatus.toggleBtn('stop', 'none');
+    gameStatus.setBtnDisplay('stop', 'none');
 
     let resultString;
     if (result === 'lost') {
@@ -86,7 +86,7 @@ function endGame(result) {
  * 게임이 끝나면 멈추고
  * timer가 0이 되면 endGame('lost') 호출
  */
-function timerPerOneSecond() {
+function gameTimer() {
     let timerId = setTimeout(function oneSecond() {
         if (!gameStart) {
             return;
@@ -107,16 +107,16 @@ function timerPerOneSecond() {
 /**
  * 게임 시작
  * 게임판 세팅 : setBoards()
- * 타이머 시작 : timerPerOneSecond()
+ * 타이머 시작 : gameTimer()
  */
 function startGame()  {
     gameStart = true;
-    gameStatus.toggleBtn('start', 'none');
-    gameStatus.toggleBtn('stop', 'inline');
+    gameStatus.setBtnDisplay('start', 'none');
+    gameStatus.setBtnDisplay('stop', 'inline');
     gameBoard.setBoard(LEVEL);
 
     gameSound.playSound(gameSound.getBg());
-    timerPerOneSecond();
+    gameTimer();
 }
 
 /**
@@ -125,7 +125,7 @@ function startGame()  {
 function setGame() {
     timer = LEVEL;
     count = LEVEL;
-    gameStatus.toggleBtn('start', 'inline');
+    gameStatus.setBtnDisplay('start', 'inline');
     gameStatus.setTimerColor('black');
     gameStatus.setTimerTextContent(timer);
     gameStatus.setCountTextContent(count);
